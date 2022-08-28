@@ -4,6 +4,8 @@ useWebGl(canvas)
 </script>
 
 <template>
-  <h1>WebGL</h1>
-  <canvas ref="canvas"></canvas>
+  <div>
+    <h1>WebGL</h1>
+    <canvas ref="canvas"></canvas>
+  </div>
 </template>
