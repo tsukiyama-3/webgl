@@ -1,3 +1,16 @@
+const VSHADER_CODE = `
+  void main() {
+    gl_Position = vec4(.0, .0, .0, 1.);
+    gl_PointSize = 10.;
+  }
+`
+
+const FSHADER_CODE = `
+  void main() {
+    gl_FragColor = vec4(.0, 1., .0, 1.);
+  }
+`
+
 const createShader = (gl, type, source) => {
   const shader = gl.createShader(type)
   if (shader === null) {
@@ -16,13 +29,58 @@ const createShader = (gl, type, source) => {
   return shader
 }
 
+const createProgram = (gl, vshader, fshader) => {
+  const program = gl.createProgram()
+  if (!program) {
+    return null
+  }
+  gl.attachShader(program, vshader)
+  gl.deleteShader(vshader)
+  gl.attachShader(program, fshader)
+  gl.deleteShader(fshader)
+  gl.linkProgram(program)
+  const linked = gl.getProgramParameter(program, gl.LINK_STATUS)
+  if (!linked) {
+    const log = gl.getProgramInfoLog(program)
+    console.error('Failed to link a program\n' + log)
+    gl.deleteProgram(program)
+    return null
+  }
+  return program
+}
+
+const createProgramFromCode = (gl, vshaderCode, fshaderCode) => {
+  const vshader = createShader(gl, gl.VERTEX_SHADER, vshaderCode)
+  if (!vshader) {
+    return null
+  }
+  const fshader = createShader(gl, gl.FRAGMENT_SHADER, fshaderCode)
+  if (!fshader) {
+    gl.deleteShader(vshader)
+    return null
+  }
+  return createProgram(gl, vshader, fshader)
+}
+
+const render = (gl) => {
+  gl.clearColor(0, 0, .5, 1.)
+  gl.clear(gl.COLOR_BUFFER_BIT)
+  gl.drawArrays(gl.POINTS, 0, 1)
+}
+
 export const useWebGl = (canvas) => {
   const gl = ref()
   onMounted(() => {
     canvas.value.width = 500
     canvas.value.height = 300
-    gl.value = canvas.value.getContext('webgl')
-    gl.value.clearColor(.0, .0, .0, 1.)
-    gl.value.clear(gl.value.COLOR_BUFFER_BIT)
+    gl.value = canvas.value.getContext('webgl2')
+    if (!gl.value) {
+      console.error('Faild to obtain WebGL 2.0 context')
+      return
+    }
+    const program = createProgramFromCode(gl.value, VSHADER_CODE, FSHADER_CODE)
+    gl.value.useProgram(program)
+
+    render(gl.value)
   })
 }
