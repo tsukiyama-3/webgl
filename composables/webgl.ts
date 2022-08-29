@@ -22,12 +22,16 @@ const FSHADER_CODE = `
  * @param source シェーダーのソースコード
  */
 const createShader = (gl, type, source) => {
+  // WebGLShaderを作成する
   const shader = gl.createShader(type)
+  // 作成できなかったらnullをreturn
   if (shader === null) {
     console.error('Failed to create a shader')
     return null
   }
+  // シェーダーのソースを設定する
   gl.shaderSource(shader, source)
+  // GLSLシェーダーをバイナリへコンパイルする
   gl.compileShader(shader)
   const compiled = gl.getShaderParameter(shader, gl.COMPILE_STATUS)
   if (!compiled) {
@@ -52,10 +56,13 @@ const createProgram = (gl, vshader, fshader) => {
   if (!program) {
     return null
   }
+  //  フラグメントか頂点のどちらかのWebGLShaderをWebGLProgramにアタッチして
+  // WebGLShaderオブジェクトに削除マークをつけて、シェーダーが使用されなくなると削除する
   gl.attachShader(program, vshader)
   gl.deleteShader(vshader)
   gl.attachShader(program, fshader)
   gl.deleteShader(fshader)
+  // 頂点シェーダーとフラグメントシェーダーをリンクする
   gl.linkProgram(program)
   const linked = gl.getProgramParameter(program, gl.LINK_STATUS)
   if (!linked) {
