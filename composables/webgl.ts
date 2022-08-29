@@ -103,25 +103,46 @@ const createProgramFromCode = (gl, vshaderCode, fshaderCode) => {
   return createProgram(gl, vshader, fshader)
 }
 
-const render = (gl) => {
-  gl.clearColor(1, 1, 1, 1)
-  gl.clear(gl.COLOR_BUFFER_BIT)
-  gl.drawArrays(gl.POINTS, 0, 1)
-}
-
 export const useWebGl = (canvas) => {
   const gl = ref()
   onMounted(() => {
-    canvas.value.width = 500
-    canvas.value.height = 300
-    gl.value = canvas.value.getContext('webgl2')
-    if (!gl.value) {
-      console.error('Faild to obtain WebGL 2.0 context')
-      return
-    }
-    const program = createProgramFromCode(gl.value, VSHADER_CODE, FSHADER_CODE)
+    canvas.value.width = 512
+    canvas.value.height = 512
+    gl.value = canvas.value.getContext('webgl')
+    const vs = gl.value.createShader(gl.value.VERTEX_SHADER)
+    gl.value.shaderSource(vs, VSHADER_CODE)
+    console.log(gl.value)
+    gl.value.compileShader(vs)
+    const fs = gl.value.createShader(gl.value.FRAGMENT_SHADER)
+    gl.value.shaderSource(fs, FSHADER_CODE)
+    gl.value.compileShader(fs)
+    const program = gl.value.createProgram()
+    gl.value.attachShader(program, vs)
+    gl.value.attachShader(program, fs)
+    gl.value.linkProgram(program)
+    gl.value.clear(gl.value.COLOR_BUFFER_BIT)
     gl.value.useProgram(program)
-
-    render(gl.value)
+    const size = gl.value.getUniformLocation(program, 'size');
+    gl.value.uniform1f(size, 32.)
+    const vertices = new Float32Array([
+      1., 1., .0,
+      -1., 1., .0,
+      1., -1., .0,
+      -1., -1., .0
+    ])
+    const buffer = gl.value.createBuffer()
+    gl.value.bindBuffer(gl.value.ARRAY_BUFFER, buffer)
+    gl.value.bufferData(gl.value.ARRAY_BUFFER, vertices, gl.value.STATIC_DRAW)
+    const position = gl.value.getAttribLocation(program, 'position')
+    gl.value.vertexAttribPointer(
+      position,
+      3,
+      gl.value.FLOAT,
+      false,
+      0,
+      0
+    )
+    gl.value.enableVertexAttribArray(position)
+    gl.value.drawArrays(gl.value.TRIANGEL, 0, 4)
   })
 }
