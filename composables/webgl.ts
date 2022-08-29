@@ -2,7 +2,8 @@
 const VSHADER_CODE = `
   attribute vec4 position;
   void main() {
-    gl_Position = position;
+    gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+    gl_PointSize = 10.0;
   }
 `
 
@@ -11,12 +12,7 @@ const FSHADER_CODE = `
   precision mediump float;
   uniform float size;
   void main() {
-    if (
-      mod(gl_FragCoord.x, size) < 1. ||
-      mod(gl_FragCoord.y, size) < 1.
-    ) {
-      gl_FragColor = vec4(.0, .0, .0, .8);
-    } else {discard;}
+    gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
   }
 `
 
@@ -103,46 +99,20 @@ const createProgramFromCode = (gl, vshaderCode, fshaderCode) => {
   return createProgram(gl, vshader, fshader)
 }
 
+const render = (gl) => {
+  gl.clearColor(0, 0, 0.5, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.drawArrays(gl.POINTS, 0, 1);
+}
+
 export const useWebGl = (canvas) => {
   const gl = ref()
   onMounted(() => {
     canvas.value.width = 512
     canvas.value.height = 512
-    gl.value = canvas.value.getContext('webgl')
-    const vs = gl.value.createShader(gl.value.VERTEX_SHADER)
-    gl.value.shaderSource(vs, VSHADER_CODE)
-    console.log(gl.value)
-    gl.value.compileShader(vs)
-    const fs = gl.value.createShader(gl.value.FRAGMENT_SHADER)
-    gl.value.shaderSource(fs, FSHADER_CODE)
-    gl.value.compileShader(fs)
-    const program = gl.value.createProgram()
-    gl.value.attachShader(program, vs)
-    gl.value.attachShader(program, fs)
-    gl.value.linkProgram(program)
-    gl.value.clear(gl.value.COLOR_BUFFER_BIT)
+    gl.value = canvas.value.getContext('webgl2')
+    const program = createProgramFromCode(gl.value, VSHADER_CODE, FSHADER_CODE)
     gl.value.useProgram(program)
-    const size = gl.value.getUniformLocation(program, 'size');
-    gl.value.uniform1f(size, 32.)
-    const vertices = new Float32Array([
-      1., 1., .0,
-      -1., 1., .0,
-      1., -1., .0,
-      -1., -1., .0
-    ])
-    const buffer = gl.value.createBuffer()
-    gl.value.bindBuffer(gl.value.ARRAY_BUFFER, buffer)
-    gl.value.bufferData(gl.value.ARRAY_BUFFER, vertices, gl.value.STATIC_DRAW)
-    const position = gl.value.getAttribLocation(program, 'position')
-    gl.value.vertexAttribPointer(
-      position,
-      3,
-      gl.value.FLOAT,
-      false,
-      0,
-      0
-    )
-    gl.value.enableVertexAttribArray(position)
-    gl.value.drawArrays(gl.value.TRIANGEL, 0, 4)
+    render(gl.value)
   })
 }
