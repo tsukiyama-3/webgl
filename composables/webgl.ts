@@ -1,3 +1,4 @@
+// vertex shader source
 const VSHADER_CODE = `
   void main() {
     gl_Position = vec4(.0, .0, .0, 1.);
@@ -5,12 +6,21 @@ const VSHADER_CODE = `
   }
 `
 
+// fragment shader source
 const FSHADER_CODE = `
   void main() {
     gl_FragColor = vec4(.0, 1., .0, 1.);
   }
 `
 
+/**
+ * シェーダーコードをコンパイルしてシェーダーオブジェクトを作成するメソッド
+ * 失敗したっばいはnullを返す
+ * 
+ * @param gl WebGL コンテキスト
+ * @param type gl.VERTEX_SHADER あるいは gl.FRAGMENT_SHADER
+ * @param source シェーダーのソースコード
+ */
 const createShader = (gl, type, source) => {
   const shader = gl.createShader(type)
   if (shader === null) {
@@ -29,6 +39,14 @@ const createShader = (gl, type, source) => {
   return shader
 }
 
+/**
+ * シェーダーオブジェクトをリンクしてプログラムオブジェクトを作成するメソッド
+ * 失敗したらnullを返す
+ * 
+ * @param gl WebGL コンテキスト
+ * @param vshader 頂点シェーダーオブジェクト
+ * @param fshader フラグメントシェーダーオブジェクト
+ */
 const createProgram = (gl, vshader, fshader) => {
   const program = gl.createProgram()
   if (!program) {
@@ -49,6 +67,15 @@ const createProgram = (gl, vshader, fshader) => {
   return program
 }
 
+/**
+ * 頂点シェーダーとフラグメントシェーダーのソースコードから
+ * プログラムオブジェクトを返すメソッド
+ * 失敗したらnullを返す
+ * 
+ * @param gl WebGL コンテキスト
+ * @param vshaderCode 頂点シェーダーのソースコード
+ * @param fshaderCode フラグメントシェーダーのソースコード
+ */
 const createProgramFromCode = (gl, vshaderCode, fshaderCode) => {
   const vshader = createShader(gl, gl.VERTEX_SHADER, vshaderCode)
   if (!vshader) {
