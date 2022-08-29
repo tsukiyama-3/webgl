@@ -1,15 +1,22 @@
 // vertex shader source
 const VSHADER_CODE = `
+  attribute vec4 position;
   void main() {
-    gl_Position = vec4(.0, .0, .0, 1.);
-    gl_PointSize = 10.;
+    gl_Position = position;
   }
 `
 
 // fragment shader source
 const FSHADER_CODE = `
+  precision mediump float;
+  uniform float size;
   void main() {
-    gl_FragColor = vec4(.0, 1., .0, 1.);
+    if (
+      mod(gl_FragCoord.x, size) < 1. ||
+      mod(gl_FragCoord.y, size) < 1.
+    ) {
+      gl_FragColor = vec4(.0, .0, .0, .8);
+    } else {discard;}
   }
 `
 
@@ -97,7 +104,7 @@ const createProgramFromCode = (gl, vshaderCode, fshaderCode) => {
 }
 
 const render = (gl) => {
-  gl.clearColor(0, 0, .5, 1.)
+  gl.clearColor(1, 1, 1, 1)
   gl.clear(gl.COLOR_BUFFER_BIT)
   gl.drawArrays(gl.POINTS, 0, 1)
 }
