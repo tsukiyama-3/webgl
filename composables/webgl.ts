@@ -2,8 +2,7 @@
 const VSHADER_CODE = `
   attribute vec4 position;
   void main() {
-    gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
-    gl_PointSize = 10.0;
+    gl_Position = position;
   }
 `
 
@@ -12,7 +11,12 @@ const FSHADER_CODE = `
   precision mediump float;
   uniform float size;
   void main() {
-    gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+    if(
+    mod(gl_FragCoord.x,size)<1.0 ||
+    mod(gl_FragCoord.y,size)<1.0
+    ){
+      gl_FragColor = vec4(0.0, 0.0, 0.0, 0.8);
+    }else {discard;}
   }
 `
 
@@ -99,11 +103,24 @@ const createProgramFromCode = (gl, vshaderCode, fshaderCode) => {
   return createProgram(gl, vshader, fshader)
 }
 
-const render = (gl) => {
-  gl.clearColor(0, 0, 0.5, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.POINTS, 0, 1);
+const createBuffer = (data, gl) => {
+  const buffer = gl.createBuffer()
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW)
 }
+
+const render = (gl) => {
+  // gl.clearColor(0, 0, 0.5, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  // gl.drawArrays(gl.POINTS, 0, 1);
+}
+
+const vertices = new Float32Array([
+  1.0, 1.0, 0.0,
+  -1.0, 1.0, 0.0,
+  1.0, -1.0, 0.0,
+  -1.0, -1.0, 0.0
+])
 
 export const useWebGl = (canvas) => {
   const gl = ref()
@@ -111,8 +128,22 @@ export const useWebGl = (canvas) => {
     canvas.value.width = 512
     canvas.value.height = 512
     gl.value = canvas.value.getContext('webgl2')
+    gl.value.clear(gl.value.COLOR_BUFFER_BIT)
     const program = createProgramFromCode(gl.value, VSHADER_CODE, FSHADER_CODE)
     gl.value.useProgram(program)
-    render(gl.value)
+    const size = gl.value.getUniformLocation(program, 'size')
+    gl.value.uniform1f(size, 32)
+    createBuffer(vertices, gl.value)
+    const position = gl.value.getAttribLocation(program, 'position')
+    gl.value.vertexAttribPointer(
+      position,
+      3,
+      gl.value.FLOAT,
+      false,
+      0,
+      0
+    )
+    gl.value.enableVertexAttribArray(position)
+    gl.value.drawArrays(gl.value.TRIANGLE_STRIP, 0, 4)
   })
 }
