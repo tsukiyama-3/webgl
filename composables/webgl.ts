@@ -132,6 +132,13 @@ const hex2rgb = (hex: string): [number, number, number] => {
   ]
 }
 
+const normalize = (cx: number, cy: number) => {
+  const mid = size / 2
+  const x = (cx - mid) / mid + 1 / size
+  const y = (mid - cy) / mid - 1 / size
+  return [x, y, 0]
+}
+
 const dotSize: number = 32
 const pixels: Ref<Array<[number, number, string]>> = ref([])
 const color: Ref<string> = ref('#ff0000')
