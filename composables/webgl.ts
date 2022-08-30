@@ -124,6 +124,14 @@ const vertices = new Float32Array([
   -1.0, -1.0, 0.0
 ])
 
+const hex2rgb = (hex: string): [number, number, number] => {
+  return [
+    parseInt(hex.slice(1, 3), 16) / 255,
+    parseInt(hex.slice(3, 5), 16) / 255,
+    parseInt(hex.slice(5, 7), 16) / 255
+  ]
+}
+
 const dotSize: number = 32
 const pixels: Ref<Array<[number, number, string]>> = ref([])
 const color: Ref<string> = ref('#ff0000')
