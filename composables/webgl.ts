@@ -1,3 +1,5 @@
+import { Ref } from 'vue'
+
 // vertex shader source
 const VSHADER_CODE = `
   attribute vec4 position;
@@ -122,6 +124,10 @@ const vertices = new Float32Array([
   -1.0, -1.0, 0.0
 ])
 
+const dotSize: number = 32
+const pixels: Ref<Array<[number, number, string]>> = ref([])
+const color: Ref<string> = ref('#ff0000')
+
 export const useWebGl = (canvas) => {
   const gl = ref()
   onMounted(() => {
@@ -146,4 +152,17 @@ export const useWebGl = (canvas) => {
     gl.value.enableVertexAttribArray(position)
     gl.value.drawArrays(gl.value.TRIANGLE_STRIP, 0, 4)
   })
+  const recordPoint = (x, y) => {
+    pixels.value = pixels.value.filter(([px, py]) => x !== px || y !== py)
+    if (color.value) {
+      pixels.value.push([x, y, color.value])
+    }
+  }
+  const onClick = (e) => {
+    const x = Math.floor(e.offsetX / dotSize * window.devicePixelRatio)
+    const y = Math.floor(e.offsetY / dotSize * window.devicePixelRatio)
+    recordPoint(x, y)
+    console.log(x, y)
+  }
+  return { onClick }
 }
