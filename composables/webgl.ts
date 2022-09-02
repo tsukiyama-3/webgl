@@ -167,6 +167,11 @@ export const useWebGl = (canvas) => {
     gl.value.enableVertexAttribArray(position)
     gl.value.drawArrays(gl.value.TRIANGLE_STRIP, 0, 4)
   })
+  const render = () => {
+    gl.value.clear(gl.value.COLOR_BUFFER_BIT)
+    const points = pixels.value.length
+    const selectedPoints = []
+  }
   const recordPoint = (x, y) => {
     pixels.value = pixels.value.filter(([px, py]) => x !== px || y !== py)
     if (color.value) {
