@@ -1,10 +1,13 @@
 <script setup lang="ts">
-const promise = new Promise(resolve => {
-	// 引数に文字列を渡す
-	resolve('resolveしたよ')
-}).then((val) => [
-  console.log(val)
-])
+const promise = new Promise((resolve, reject) => {
+	reject()
+})
+	.then(() => {
+		console.log('resolveしたよ')
+	})
+	.catch(() => {
+		console.log('rejectしたよ')
+	})
 </script>
 
 <template>
