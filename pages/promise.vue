@@ -1,8 +1,10 @@
 <script setup lang="ts">
 const promise = new Promise(resolve => {
-	resolve()
-}).then(() => [console.log('resolveしたよ')])
-console.log(promise)
+	// 引数に文字列を渡す
+	resolve('resolveしたよ')
+}).then((val) => [
+  console.log(val)
+])
 </script>
 
 <template>
