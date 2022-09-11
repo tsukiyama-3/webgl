@@ -1,23 +1,23 @@
 <script setup lang="ts">
-const promise1 = new Promise((resolve) => {
-  setTimeout(() => {
-    resolve()
-  }, 1000)
-}).then(() => {
-  console.log('promise1終わったよ')
-})
-
-const promise2 = new Promise((resolve) => {
-  setTimeout(() => {
-    resolve()
-  }, 3000)
-}).then(() => {
-  console.log('promise2終わったよ')
-})
-
-Promise.all([promise1, promise2]).then(() => {
-  console.log('全部終わったよ')
-})
+// Promise
+const alwaysLateBoy1 = ms => {
+	new Promise(resolve => {
+		setTimeout(() => {
+			resolve()
+		}, ms)
+	}).then(() => {
+		console.log(`${ms}ms遅れた`)
+	})
+}
+// async/await
+const alwaysLateBoy2 = async ms => {
+	await new Promise(resolve => {
+		setTimeout(() => {
+			resolve()
+		}, ms)
+	})
+	console.log(`${ms}ms遅れた`)
+}
 </script>
 
 <template>
