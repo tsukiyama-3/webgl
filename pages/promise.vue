@@ -1,12 +1,16 @@
 <script setup lang="ts">
 const promise = new Promise((resolve, reject) => {
-	reject()
+	resolve('test')
 })
-	.then(() => {
-		console.log('resolveしたよ')
+	.then(val => {
+		console.log(`then1: ${val}`)
+		return val
 	})
-	.catch(() => {
-		console.log('rejectしたよ')
+	.catch(val => {
+		console.log(`catch: ${val}`)
+	})
+	.then(val => {
+		console.log(`then2: ${val}`)
 	})
 </script>
 
