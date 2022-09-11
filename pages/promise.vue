@@ -1,23 +1,8 @@
 <script setup lang="ts">
-// Promise
-const alwaysLateBoy1 = ms => {
-	new Promise(resolve => {
-		setTimeout(() => {
-			resolve()
-		}, ms)
-	}).then(() => {
-		console.log(`${ms}ms遅れた`)
-	})
+const asyncFunc = async () => {
+	return 1
 }
-// async/await
-const alwaysLateBoy2 = async ms => {
-	await new Promise(resolve => {
-		setTimeout(() => {
-			resolve()
-		}, ms)
-	})
-	console.log(`${ms}ms遅れた`)
-}
+console.log(asyncFunc())
 </script>
 
 <template>
