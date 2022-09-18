@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const canvas = ref()
-const { onClick } = useWebGl(canvas)
+const { onClick } = useWebGlSample(canvas)
 </script>
 
 <template>
