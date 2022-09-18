@@ -1,6 +1,7 @@
 export const VSHADER_CODE = `
+  attribute vec4 a_position;
+
   void main() {
-    gl_Position = vec4(.0, .0, .0, 1.);
-    gl_PointSize = 10.;
+    gl_Position = a_position;
   }
 `

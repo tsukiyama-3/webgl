@@ -14,11 +14,29 @@ export const useDotSmaple = (canvas: Ref<HTMLCanvasElement>) => {
     }
     const program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE)
     gl.useProgram(program)
+    // 頂点バッファ
+    const positionBuffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
+    const positions = [
+      0, 1,
+      0.866, -0.5,
+      -0.866, -0.5
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
+    const index = gl.getAttribLocation(program, 'a_position')
+    const size = 2
+    const type = gl.FLOAT
+    const normalized = false
+    const stride = 0
+    const offset = 0
+    gl.vertexAttribPointer(index, size, type, normalized, stride, offset)
+    gl.enableVertexAttribArray(index)
     render(gl)
   })
   const render = (gl: WebGL2RenderingContext) => {
-    gl.clearColor(0, 0, .5, 1.)
+    gl.clearColor(0, 0, .0, .0)
     gl.clear(gl.COLOR_BUFFER_BIT)
-    gl.drawArrays(gl.POINTS, 0, 1)
+    console.log(gl.POINTS)
+    gl.drawArrays(gl.TRIANGLES, 0, 3)
   }
 }
