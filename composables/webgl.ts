@@ -6,7 +6,7 @@
  * @param type gl.VERTEX_SAHDER あるいは gl.FRAGMENT_SHADER
  * @param source シェーダーのソースコード
  */
-const createShader = (gl, type, source) => {
+const createShader = (gl: WebGL2RenderingContext, type: number, source: string) => {
   const shader = gl.createShader(type)
   if (shader === null) {
     console.error('Faild to create a shader')
@@ -33,7 +33,7 @@ const createShader = (gl, type, source) => {
  * @param vshader 頂点シェーダー
  * @param fshader フラグメントシェーダー
  */
-const createProgram = (gl, vshader, fshader) => {
+const createProgram = (gl: WebGL2RenderingContext, vshader: WebGLShader, fshader: WebGLShader) => {
   const program = gl.createProgram()
   if (!program) {
     return null
@@ -55,7 +55,7 @@ const createProgram = (gl, vshader, fshader) => {
   return program
 }
 
-export const createProgramFromCode = (gl, vshaderCode, fshaderCode) => {
+export const createProgramFromCode = (gl: WebGL2RenderingContext, vshaderCode: string, fshaderCode: string) => {
   const vshader = createShader(gl, gl.VERTEX_SHADER, vshaderCode)
   if (!vshader) {
     console.log('hoge')
