@@ -8,8 +8,8 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     if (!(canvas.value instanceof HTMLCanvasElement)) {
       throw new Error('canvas要素がありません')
     }
-    canvas.value.width = 300
-    canvas.value.height = 300
+    canvas.value.width = 512
+    canvas.value.height = 512
     const gl = canvas.value.getContext('webgl2')
     if (!(gl instanceof WebGL2RenderingContext)) {
       throw new Error('WebGLの初期化に失敗しました')
@@ -20,10 +20,9 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     const positionBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
     const positions = [
-      0.0, 0.0, 0.0,
-      1.0, 1.0, 0.0,
-      -0.9, -0.4, 0.0,
-      0.9, 0.4, 0.0
+      0.0, -1.0, 0.0,
+      1.0, 1.0, 1.0,
+      -1.0, -1.0, 0.0,
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
     const index = gl.getAttribLocation(program, 'a_position')
