@@ -21,7 +21,9 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
     const positions = [
       0.0, 0.0, 0.0,
-      1.0, 1.0, 0.0
+      1.0, 1.0, 0.0,
+      -0.9, -0.4, 0.0,
+      0.9, 0.4, 0.0
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
     const index = gl.getAttribLocation(program, 'a_position')
@@ -37,6 +39,6 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
   const render = (gl: WebGL2RenderingContext) => {
     gl.clearColor(0, 0, .0, .0)
     gl.clear(gl.COLOR_BUFFER_BIT)
-    gl.drawArrays(gl.LINES, 0, 2)
+    gl.drawArrays(gl.LINES, 0, 4)
   }
 }
