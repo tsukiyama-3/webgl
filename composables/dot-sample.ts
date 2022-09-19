@@ -14,13 +14,16 @@ export const useDotSmaple = (canvas: Ref<HTMLCanvasElement>) => {
     }
     const program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE)
     gl.useProgram(program)
-    // 頂点バッファ
+    // 頂点バッファ ここから
     const positionBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
     const positions = [
-      0, 1,
-      0.866, -0.5,
-      -0.866, -0.5
+      0, 0,
+      0, 0.5,
+      0.7, 0,
+      0, 0,
+      0, -0.5,
+      -0.7, 0
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
     const index = gl.getAttribLocation(program, 'a_position')
@@ -37,6 +40,6 @@ export const useDotSmaple = (canvas: Ref<HTMLCanvasElement>) => {
     gl.clearColor(0, 0, .0, .0)
     gl.clear(gl.COLOR_BUFFER_BIT)
     console.log(gl.POINTS)
-    gl.drawArrays(gl.TRIANGLES, 0, 3)
+    gl.drawArrays(gl.TRIANGLES, 0, 6)
   }
 }
