@@ -14,7 +14,7 @@ export const useDotSmaple = (canvas: Ref<HTMLCanvasElement>) => {
     }
     const program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE)
     gl.useProgram(program)
-    // 頂点バッファ ここから
+    // 頂点バッファ
     const positionBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
     const positions = [
