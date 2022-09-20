@@ -20,15 +20,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     gl.useProgram(program)
     // 頂点バッファ
     const positionBuffer = gl.createBuffer()
-    console.log(positionBuffer)
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-    const positions = [
-      0, 0,
-      .5, 0,
-      .5, -.5,
-      0, -.5
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
     const index = gl.getAttribLocation(program, 'a_position')
     const size = 2
     const type = gl.FLOAT
@@ -38,10 +30,25 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     gl.vertexAttribPointer(index, size, type, normalized, stride, offset)
     gl.enableVertexAttribArray(index)
     render(gl)
+    const positions = [
+      0, 0,
+      .5, 0,
+      .5, -.5,
+      0, -.5
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const positions2 = [
+      0, 0,
+      -.5, 0,
+      -.5, .5,
+      0, .5
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions2), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
   })
   const render = (gl: WebGL2RenderingContext) => {
     gl.clearColor(0, 0, .0, .0)
     gl.clear(gl.COLOR_BUFFER_BIT)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
   }
 }
