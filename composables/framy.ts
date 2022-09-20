@@ -31,18 +31,18 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     gl.enableVertexAttribArray(index)
     render(gl)
     const positions = [
-      0, 0,
-      .5, 0,
-      .5, -.5,
-      0, -.5
+      -0.625, 0.625,
+      -0.125, 0.625,
+      -0.125, 0.125,
+      -0.625, 0.125
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
     gl.drawArrays(gl.LINE_LOOP, 0, 4)
     const positions2 = [
-      0, 0,
-      -.5, 0,
-      -.5, .5,
-      0, .5
+      -0.1875, 0.25,
+      0.8125, 0.25,
+      0.8125, -0.25,
+      -0.1875, -0.25
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions2), gl.STATIC_DRAW)
     gl.drawArrays(gl.LINE_LOOP, 0, 4)
