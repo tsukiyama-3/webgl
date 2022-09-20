@@ -14,15 +14,19 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     if (!(gl instanceof WebGL2RenderingContext)) {
       throw new Error('WebGLの初期化に失敗しました')
     }
+    // GLSLプログラムをGPUにアップロード
     const program = createProgramFromCode(gl, VSHADER_CODE, FSHADER_CODE)
+    // 作成したプログラムを設定する
     gl.useProgram(program)
     // 頂点バッファ
     const positionBuffer = gl.createBuffer()
+    console.log(positionBuffer)
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
     const positions = [
-      0.0, -1.0, 0.0,
-      1.0, 1.0, 1.0,
-      -1.0, -1.0, 0.0,
+      0.0, -1.0,
+      1.0, 1.0,
+      -1.0, 0,
+      1.0, -1.0
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
     const index = gl.getAttribLocation(program, 'a_position')

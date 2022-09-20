@@ -6,7 +6,7 @@ useFramy(canvas)
 
 <template>
   <div>
-    <h1>FRAMY</h1>
+    <!-- <h1>FRAMY</h1> -->
     <canvas ref="canvas"></canvas>
   </div>
 </template>
