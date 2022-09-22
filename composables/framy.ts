@@ -46,6 +46,46 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions2), gl.STATIC_DRAW)
     gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const positions3 = [
+      -0.875, 0.3125,
+      -0.5, 0.3125,
+      -0.5, 0.125,
+      -0.875, 0.125
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions3), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const positions4 = [
+      -0.125, -0.25,
+      0, -0.25,
+      0, -0.625,
+      -0.125, -0.625
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions4), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const positions5 = [
+      0.0625, -0.25,
+      0.1875, -0.25,
+      0.1875, -0.625,
+      0.0625, -0.625
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions5), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const positions6 = [
+      0.4375, -0.25,
+      0.5625, -0.25,
+      0.5625, -0.625,
+      0.4375, -0.625
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions6), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const positions7 = [
+      0.625, -0.25,
+      0.75, -0.25,
+      0.75, -0.625,
+      0.625, -0.625
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions7), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
   })
   const render = (gl: WebGL2RenderingContext) => {
     gl.clearColor(0, 0, .0, .0)
