@@ -127,6 +127,14 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions12), gl.STATIC_DRAW)
     gl.drawArrays(gl.POINTS, 0, 2)
+    const drawScene = () => {
+      positions12[1] += 0.001
+      console.log(positions12[1])
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions12), gl.STATIC_DRAW)
+      gl.drawArrays(gl.POINTS, 0, 2)
+      // requestAnimationFrame(drawScene)
+    }
+    requestAnimationFrame(drawScene)
   })
   const render = (gl: WebGL2RenderingContext) => {
     gl.clearColor(0, 0, .0, .0)
