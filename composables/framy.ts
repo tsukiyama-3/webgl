@@ -34,12 +34,26 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
 
     const oneEight = 0.125
 
+    // 四角を描画
     const drawRectangle = (pos) => {
       pos = pos.map(index => index * oneEight)
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW)
       gl.drawArrays(gl.LINE_LOOP, 0, pos.length / 2)
     }
+    // 塗りつぶしの四角を描画
+    const fillRectangle = (pos) => {
+      pos = pos.map(index => index * oneEight)
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW)
+      gl.drawArrays(gl.TRIANGLES, 0, pos.length / 2)
+    }
+    // 点を描画
+    const drawPoints = (pos) => {
+      pos = pos.map(index => index * oneEight)
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW)
+      gl.drawArrays(gl.POINTS, 0, 2)
+    }
 
+    // 頭
     const headPosition = [
       -5 , 5 ,
       -1, 5,
@@ -47,6 +61,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       -5, 1
     ]
     drawRectangle(headPosition)
+    // 体
     const bodyPosition = [
       -1.5, 2,
       6.5, 2,
@@ -54,6 +69,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       -1.5, -2
     ]
     drawRectangle(bodyPosition)
+    // 口
     const mouthPosition = [
       -7, 2.5,
       -4, 2.5,
@@ -61,6 +77,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       -7, 1
     ]
     drawRectangle(mouthPosition)
+    // 右前足
     const rightFrontLegPosition = [
       -1, -2,
       0, -2,
@@ -68,6 +85,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       -1, -5
     ]
     drawRectangle(rightFrontLegPosition)
+    // 左前足
     const leftFrontLegPosition = [
       0.5, -2,
       1.5, -2,
@@ -75,6 +93,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       0.5, -5
     ]
     drawRectangle(leftFrontLegPosition)
+    // 右後ろ足
     const rightBackLegPosition = [
       3.5, -2,
       4.5, -2,
@@ -82,6 +101,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       3.5, -5
     ]
     drawRectangle(rightBackLegPosition)
+    // 左後ろ足
     const leftBackLegPosition = [
       5, -2,
       6, -2,
@@ -89,6 +109,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       5, -5
     ]
     drawRectangle(leftBackLegPosition)
+    // 右耳
     const rightEarPosition = [
       -6, 6.5,
       -4, 6.5,
@@ -96,6 +117,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       -6, 4
     ]
     drawRectangle(rightEarPosition)
+    // 左耳
     const leftEarPosition = [
       -2, 6.5,
       .5, 6.5,
@@ -103,6 +125,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       -2, 4
     ]
     drawRectangle(leftEarPosition)
+    // 尻尾
     const tailPosition = [
       5.25, 1.75,
       7.25, 2.75,
@@ -110,11 +133,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       5.75, 1
     ]
     drawRectangle(tailPosition)
-    const fillRectangle = (pos) => {
-      pos = pos.map(index => index * oneEight)
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW)
-      gl.drawArrays(gl.TRIANGLES, 0, pos.length / 2)
-    }
+    // 鼻
     const nousePosition = [
       -7, 2.5,
       -6, 2.5,
@@ -124,11 +143,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       -6, 2,
     ]
     fillRectangle(nousePosition)
-    const drawPoints = (pos) => {
-      pos = pos.map(index => index * oneEight)
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW)
-      gl.drawArrays(gl.POINTS, 0, 2)
-    }
+    // 目
     const eyesPosition = [
       -4, 3,
       -2.5, 3,
