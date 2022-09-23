@@ -29,115 +29,110 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     const offset = 0
     gl.vertexAttribPointer(index, size, type, normalized, stride, offset)
     gl.enableVertexAttribArray(index)
-    render(gl)
-    const positions = [
-      -0.625, 0.625,
-      -0.125, 0.625,
-      -0.125, 0.125,
-      -0.625, 0.125
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const positions2 = [
-      -0.1875, 0.25,
-      0.8125, 0.25,
-      0.8125, -0.25,
-      -0.1875, -0.25
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions2), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const positions3 = [
-      -0.875, 0.3125,
-      -0.5, 0.3125,
-      -0.5, 0.125,
-      -0.875, 0.125
-    ] // はな
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions3), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const positions4 = [
-      -0.125, -0.25,
-      0, -0.25,
-      0, -0.625,
-      -0.125, -0.625
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions4), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const positions5 = [
-      0.0625, -0.25,
-      0.1875, -0.25,
-      0.1875, -0.625,
-      0.0625, -0.625
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions5), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const positions6 = [
-      0.4375, -0.25,
-      0.5625, -0.25,
-      0.5625, -0.625,
-      0.4375, -0.625
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions6), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const positions7 = [
-      0.625, -0.25,
-      0.75, -0.25,
-      0.75, -0.625,
-      0.625, -0.625
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions7), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const hoge = 0.125
-    const positions8 = [
-      -6 * hoge, 6.5 * hoge,
-      -4 * hoge, 6.5 * hoge,
-      -4 * hoge, 4 * hoge,
-      -6 * hoge, 4 * hoge
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions8), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const positions9 = [
-      -2 * hoge, 6.5 * hoge,
-      .5 * hoge, 6.5 * hoge,
-      .5 * hoge, 4 * hoge,
-      -2 * hoge, 4 * hoge
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions9), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const positions10 = [
-      5.25 * hoge, 1.75 * hoge,
-      7.25 * hoge, 2.75 * hoge,
-      7.75 * hoge, 2 * hoge,
-      5.75 * hoge, 1 * hoge
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions10), gl.STATIC_DRAW)
-    gl.drawArrays(gl.LINE_LOOP, 0, 4)
-    const positions11 = [
-      -7 * hoge, 2.5 * hoge,
-      -6 * hoge, 2.5 * hoge,
-      -7 * hoge, 2 * hoge,
-      -7 * hoge, 2 * hoge,
-      -6 * hoge, 2.5 * hoge,
-      -6 * hoge, 2 * hoge,
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions11), gl.STATIC_DRAW)
-    gl.drawArrays(gl.TRIANGLES, 0, 6)
-    const positions12 = [
-      -4 * hoge, 3 * hoge,
-      -2.5 * hoge, 3 * hoge,
-    ]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions12), gl.STATIC_DRAW)
-    gl.drawArrays(gl.POINTS, 0, 2)
-    const drawScene = () => {
-      positions12[1] += 0.001
-      console.log(positions12[1])
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions12), gl.STATIC_DRAW)
-      gl.drawArrays(gl.POINTS, 0, 2)
-      // requestAnimationFrame(drawScene)
-    }
-    requestAnimationFrame(drawScene)
-  })
-  const render = (gl: WebGL2RenderingContext) => {
     gl.clearColor(0, 0, .0, .0)
     gl.clear(gl.COLOR_BUFFER_BIT)
-  }
+
+    const oneEight = 0.125
+
+    const drawRectangle = (pos) => {
+      pos = pos.map(index => index * oneEight)
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW)
+      gl.drawArrays(gl.LINE_LOOP, 0, pos.length / 2)
+    }
+
+    const headPosition = [
+      -5 , 5 ,
+      -1, 5,
+      -1, 1,
+      -5, 1
+    ]
+    drawRectangle(headPosition)
+    const bodyPosition = [
+      -1.5, 2,
+      6.5, 2,
+      6.5, -2,
+      -1.5, -2
+    ]
+    drawRectangle(bodyPosition)
+    const mouthPosition = [
+      -7, 2.5,
+      -4, 2.5,
+      -4, 1,
+      -7, 1
+    ]
+    drawRectangle(mouthPosition)
+    const rightFrontLegPosition = [
+      -1, -2,
+      0, -2,
+      0, -5,
+      -1, -5
+    ]
+    drawRectangle(rightFrontLegPosition)
+    const leftFrontLegPosition = [
+      0.5, -2,
+      1.5, -2,
+      1.5, -5,
+      0.5, -5
+    ]
+    drawRectangle(leftFrontLegPosition)
+    const rightBackLegPosition = [
+      3.5, -2,
+      4.5, -2,
+      4.5, -5,
+      3.5, -5
+    ]
+    drawRectangle(rightBackLegPosition)
+    const leftBackLegPosition = [
+      5, -2,
+      6, -2,
+      6, -5,
+      5, -5
+    ]
+    drawRectangle(leftBackLegPosition)
+    const rightEarPosition = [
+      -6, 6.5,
+      -4, 6.5,
+      -4, 4,
+      -6, 4
+    ]
+    drawRectangle(rightEarPosition)
+    const leftEarPosition = [
+      -2, 6.5,
+      .5, 6.5,
+      .5, 4,
+      -2, 4
+    ]
+    drawRectangle(leftEarPosition)
+    const tailPosition = [
+      5.25, 1.75,
+      7.25, 2.75,
+      7.75, 2,
+      5.75, 1
+    ]
+    drawRectangle(tailPosition)
+    const fillRectangle = (pos) => {
+      pos = pos.map(index => index * oneEight)
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW)
+      gl.drawArrays(gl.TRIANGLES, 0, pos.length / 2)
+    }
+    const nousePosition = [
+      -7, 2.5,
+      -6, 2.5,
+      -7, 2,
+      -7, 2,
+      -6, 2.5,
+      -6, 2,
+    ]
+    fillRectangle(nousePosition)
+    const drawPoints = (pos) => {
+      pos = pos.map(index => index * oneEight)
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW)
+      gl.drawArrays(gl.POINTS, 0, 2)
+    }
+    const eyesPosition = [
+      -4, 3,
+      -2.5, 3,
+    ]
+    drawPoints(eyesPosition)
+  })
 }
