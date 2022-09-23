@@ -3,5 +3,6 @@ export const VSHADER_CODE = `
 
   void main() {
     gl_Position = a_position;
+    gl_PointSize = 7.0;
   }
 `

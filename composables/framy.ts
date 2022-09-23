@@ -51,7 +51,7 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
       -0.5, 0.3125,
       -0.5, 0.125,
       -0.875, 0.125
-    ]
+    ] // はな
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions3), gl.STATIC_DRAW)
     gl.drawArrays(gl.LINE_LOOP, 0, 4)
     const positions4 = [
@@ -86,6 +86,47 @@ export const useFramy = (canvas: Ref<HTMLCanvasElement>) => {
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions7), gl.STATIC_DRAW)
     gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const hoge = 0.125
+    const positions8 = [
+      -6 * hoge, 6.5 * hoge,
+      -4 * hoge, 6.5 * hoge,
+      -4 * hoge, 4 * hoge,
+      -6 * hoge, 4 * hoge
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions8), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const positions9 = [
+      -2 * hoge, 6.5 * hoge,
+      .5 * hoge, 6.5 * hoge,
+      .5 * hoge, 4 * hoge,
+      -2 * hoge, 4 * hoge
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions9), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const positions10 = [
+      5.25 * hoge, 1.75 * hoge,
+      7.25 * hoge, 2.75 * hoge,
+      7.75 * hoge, 2 * hoge,
+      5.75 * hoge, 1 * hoge
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions10), gl.STATIC_DRAW)
+    gl.drawArrays(gl.LINE_LOOP, 0, 4)
+    const positions11 = [
+      -7 * hoge, 2.5 * hoge,
+      -6 * hoge, 2.5 * hoge,
+      -7 * hoge, 2 * hoge,
+      -7 * hoge, 2 * hoge,
+      -6 * hoge, 2.5 * hoge,
+      -6 * hoge, 2 * hoge,
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions11), gl.STATIC_DRAW)
+    gl.drawArrays(gl.TRIANGLES, 0, 6)
+    const positions12 = [
+      -4 * hoge, 3 * hoge,
+      -2.5 * hoge, 3 * hoge,
+    ]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions12), gl.STATIC_DRAW)
+    gl.drawArrays(gl.POINTS, 0, 2)
   })
   const render = (gl: WebGL2RenderingContext) => {
     gl.clearColor(0, 0, .0, .0)
