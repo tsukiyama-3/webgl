@@ -5,8 +5,7 @@ useFramy(canvas)
 </script>
 
 <template>
-  <div>
-    <!-- <h1>FRAMY</h1> -->
-    <canvas ref="canvas"></canvas>
-  </div>
+	<div>
+		<canvas ref="canvas"></canvas>
+	</div>
 </template>
